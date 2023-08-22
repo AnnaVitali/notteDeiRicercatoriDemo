@@ -21,7 +21,7 @@
   const scene = new CollaborativeXR.Scene(sessionManager);
   scene.initializeScene();
 
-  const sunPosition = new CollaborativeXR.Vector3(0, 2.2, 1.2);
+  const sunPosition = new CollaborativeXR.Vector3(0, 2.4, 1.4);
   const sunRotation = new CollaborativeXR.Quaternion(0,0,0,0);
   const color = "#fbff2b";
   const creationOptions = {diameter: 0.5}
@@ -31,7 +31,7 @@
   await scene.addStandardHologram(sun);
 
   const nRowsMenu = 1
-  const nearMenuPosition = new CollaborativeXR.Vector3(-1.2, 0.4, 1.2);
+  const nearMenuPosition = new CollaborativeXR.Vector3(-1.2, 1.8, 1.2);
   const nearMenu = new CollaborativeXR.NearMenu(nearMenuPosition, nRowsMenu);
   const button1 = new CollaborativeXR.Button("button1", "Morning");
   button1.setOnPointerDownCallback(() =>{
@@ -54,34 +54,34 @@
   const backGroundTreeRotation = new CollaborativeXR.Quaternion(0,0,0,0);
   const backgroundTreeScaling = new CollaborativeXR.Vector3(0.5,0.5,0.5);
 
-  const backGroundTreePosition1 = new CollaborativeXR.Vector3(0.4, 0.2, 2.5);
+  const backGroundTreePosition1 = new CollaborativeXR.Vector3(0.4, 1.4, 2.5);
   const backGroundTree1 = new CollaborativeXR.ImportedHologram("tree1", "./importedMesh/old_tree/scene.gltf", backGroundTreePosition1, backGroundTreeRotation,
           backgroundTreeScaling);
   await scene.addImportedHologram(backGroundTree1);
 
-  const backGroundTreePosition2 = new CollaborativeXR.Vector3(-0.8, 0.2, 2.5);
+  const backGroundTreePosition2 = new CollaborativeXR.Vector3(-0.8, 1.4, 2.5);
   const backGroundTree2 = new CollaborativeXR.ImportedHologram("tree2", "./importedMesh/old_tree/scene.gltf", backGroundTreePosition2, backGroundTreeRotation,
           backgroundTreeScaling);
   await scene.addImportedHologram(backGroundTree2);
 
   const lionRotation = new CollaborativeXR.Quaternion(0, 1, 0, 0);
   const lionScaling = new CollaborativeXR.Vector3(3,3,3);
-  const lionPosition = new CollaborativeXR.Vector3(0.2, 0, 1.2);
+  const lionPosition = new CollaborativeXR.Vector3(0.2, 1, 1.2);
   const lion = new CollaborativeXR.ImportedHologram("lion", "./importedMesh/lion/scene.gltf", lionPosition, lionRotation, lionScaling);
   await scene.addImportedHologram(lion);
 
-  const lionManipulatorPosition = new CollaborativeXR.Vector3(0.2, 0.8, 1.2)
+  const lionManipulatorPosition = new CollaborativeXR.Vector3(0.4, 1.2, 1.2)
   const lionManipulatorMenu = new CollaborativeXR.ManipulatorMenu(lionManipulatorPosition,
           "lion");
   scene.addManipulatorMenu(lionManipulatorMenu);
 
   const tigerRotation = new CollaborativeXR.Quaternion(0, 1, 0, 0);
   const tigerScaling = new CollaborativeXR.Vector3(0.3,0.3,0.3);
-  const tigerPosition = new CollaborativeXR.Vector3(-0.6, 0, 1.2);
+  const tigerPosition = new CollaborativeXR.Vector3(-0.6, 1, 1.2);
   const tiger = new CollaborativeXR.ImportedHologram("tiger", "./importedMesh/tiger/scene.gltf", tigerPosition, tigerRotation, tigerScaling);
   await scene.addImportedHologram(tiger);
 
-  const tigerManipulatorPosition = new CollaborativeXR.Vector3(-0.6, 0.8, 1.2)
+  const tigerManipulatorPosition = new CollaborativeXR.Vector3(-0.4, 1.2, 1.2)
   const tigerManipulatorMenu = new CollaborativeXR.ManipulatorMenu(tigerManipulatorPosition,
           "tiger");
   scene.addManipulatorMenu(tigerManipulatorMenu);

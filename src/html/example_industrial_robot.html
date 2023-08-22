@@ -21,23 +21,23 @@
   scene.initializeScene();
 
   const industrialRobotRotation = new CollaborativeXR.Quaternion(0, 1, 0, 0);
-  const industrialRobotScaling = new CollaborativeXR.Vector3(1, 1, 1);
-  const industrialRobotPosition = new CollaborativeXR.Vector3(0.5, 0.5, 1.5);
+  const industrialRobotScaling = new CollaborativeXR.Vector3(0.8, 0.8, 0.8);
+  const industrialRobotPosition = new CollaborativeXR.Vector3(0.4, 1.2, 0.8);
   const robot1 = new CollaborativeXR.ImportedHologram("robot1", "./importedMesh/industrial_robot/scene.gltf", industrialRobotPosition, industrialRobotRotation, industrialRobotScaling);
   await scene.addImportedHologram(robot1);
 
-  const industrialRobotManipulatorPosition = new CollaborativeXR.Vector3(0.8, 1.2, 1.2)
+  const industrialRobotManipulatorPosition = new CollaborativeXR.Vector3(0.8, 1.8, 1.2)
   const industrialRobotManipulatorMenu = new CollaborativeXR.ManipulatorMenu(industrialRobotManipulatorPosition,
           "robot1");
   scene.addManipulatorMenu(industrialRobotManipulatorMenu);
 
   const robotArmRotation = new CollaborativeXR.Quaternion(0, 1, 0, 0);
-  const robotArmScaling = new CollaborativeXR.Vector3(0.1, 0.1, 0.1);
-  const robotArmPosition = new CollaborativeXR.Vector3(-0.3, 0.8, 0.8);
+  const robotArmScaling = new CollaborativeXR.Vector3(0.15, 0.15, 0.15);
+  const robotArmPosition = new CollaborativeXR.Vector3(-0.4, 1.2, 0.8);
   const robot2 = new CollaborativeXR.ImportedHologram("robot2", "./importedMesh/robotic_arm/scene.gltf", robotArmPosition, robotArmRotation, robotArmScaling);
   await scene.addImportedHologram(robot2);
 
-  const robotArmManipulatorPosition = new CollaborativeXR.Vector3(-0.7, 1.2, 1.2)
+  const robotArmManipulatorPosition = new CollaborativeXR.Vector3(-0.7, 1.8, 1.2)
   const robotArmManipulatorMenu = new CollaborativeXR.ManipulatorMenu(robotArmManipulatorPosition,
           "robot2");
   scene.addManipulatorMenu(robotArmManipulatorMenu);
