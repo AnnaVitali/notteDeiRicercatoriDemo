@@ -7,6 +7,21 @@
   <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
   <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@croquet/croquet@1.0.5"></script>
+  <style>
+    #myProgress {
+      width: 100%;
+      background-color: grey;
+    }
+
+    #myBar {
+      width: 1%;
+      height: 30px;
+      background-color: #0093cb;
+      text-align: center; /* To center it horizontally (if you want) */
+      line-height: 30px; /* To center it vertically */
+      color: white;
+    }
+  </style>
 </head>
 <body>
 <script type="module">
@@ -14,6 +29,11 @@
 
   const apiKey = '1Ms8POLqF7FJlrcmGNj4xx401r3E22bJs4LpMu4bH';
   const appId = 'it.unibo.studio.anna_2evitali4.microverse';
+
+  const importedElementNumber = 2;
+  let elemAdded = 0;
+  const maxWidth = 100;
+  const progressBar = document.getElementById("myBar");
 
   const sessionManager = new CollaborativeXR.SessionManager();
   await sessionManager.startSession(apiKey, appId);
@@ -26,6 +46,8 @@
   const robot1 = new CollaborativeXR.ImportedHologram("robot1", "./importedMesh/industrial_robot/scene.gltf", industrialRobotPosition, industrialRobotRotation, industrialRobotScaling);
   await scene.addImportedHologram(robot1);
 
+  moveProgressBar();
+
   const industrialRobotManipulatorPosition = new CollaborativeXR.Vector3(0.8, 1.8, 1.2)
   const industrialRobotManipulatorMenu = new CollaborativeXR.ManipulatorMenu(industrialRobotManipulatorPosition,
           "robot1");
@@ -37,6 +59,8 @@
   const robot2 = new CollaborativeXR.ImportedHologram("robot2", "./importedMesh/robotic_arm/scene.gltf", robotArmPosition, robotArmRotation, robotArmScaling);
   await scene.addImportedHologram(robot2);
 
+  moveProgressBar();
+
   const robotArmManipulatorPosition = new CollaborativeXR.Vector3(-0.7, 1.8, 1.2)
   const robotArmManipulatorMenu = new CollaborativeXR.ManipulatorMenu(robotArmManipulatorPosition,
           "robot2");
@@ -44,6 +68,19 @@
 
   scene.activateRenderLoop();
 
+  function moveProgressBar() {
+    elemAdded = elemAdded + 1;
+    const width = (maxWidth * (elemAdded / importedElementNumber).toFixed(2)) ;
+    progressBar.style.width = width + "%";
+    progressBar.innerHTML = width + "%";
+    if(width === 100){
+      progressBar.remove();
+    }
+  }
+
 </script>
+<div id="myProgress">
+  <div id="myBar">0%</div>
+</div>
 </body>
 </html>
