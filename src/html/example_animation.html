@@ -49,8 +49,8 @@
   const animationTime1 =  1000;
   const changeColor = new CollaborativeXR.Animation("changeColor", animationTime1);
 
-  const counter = new CollaborativeXR.SynchronizedVariable("counter", 1);
-  sessionManager.addSynchronizedVariable(counter);
+  const counter = new CollaborativeXR.StandardObject("counter", 1);
+  sessionManager.addStandardObject(counter);
 
   changeColor.setAnimationCallback(() => {
     counter.value = (counter.value + 1) % 5;
