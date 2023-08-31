@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scaling=1.0, maximum-scaling=1.0, minimum-scaling=1.0">
+  <title>Collaborative WebXR Application</title>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@croquet/croquet@1.0.5"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
+</head>
+<body>
+<script type="module">
+  import * as CollaborativeXR from "../../collaborativeXR.min.js"
+
+  const apiKey =  '1Ms8POLqF7FJlrcmGNj4xx401r3E22bJs4LpMu4bH';
+  const appId = 'it.unibo.studio.anna_2evitali4.collaborativeXR';
+
+  const sessionManager = new CollaborativeXR.SessionManager();
+  await sessionManager.startSession(apiKey, appId);
+  const scene = new CollaborativeXR.Scene(sessionManager);
+  scene.initializeScene();
+
+  const rotationCube = new CollaborativeXR.Quaternion(0,0,0,0);
+  const creationOptionsCube = {size: 0.3}
+  const creationOptionsSphere = {diameter: 0.3}
+  const propagateColor1 = "#ff0000";
+  const propagateColor2 = "#00ff00";
+  const propagateColor3 = "#0000ff"
+  const standardColor = "#ffffff";
+
+  const positionCube1 = new CollaborativeXR.Vector3(-0.5, 0.8, 0.5);
+  const cube1 = new CollaborativeXR.StandardHologram("Cube1",
+          CollaborativeXR.StandardShape.Cube, creationOptionsCube, positionCube1,
+          rotationCube, propagateColor1);
+  await scene.addStandardHologram(cube1);
+
+  const positionCube2 = new CollaborativeXR.Vector3(0, 0.8, 0.5);
+  const cube2 = new CollaborativeXR.StandardHologram("Cube2",
+          CollaborativeXR.StandardShape.Cube, creationOptionsCube, positionCube2,
+          rotationCube, standardColor);
+  await scene.addStandardHologram(cube2);
+
+  const positionCube3 = new CollaborativeXR.Vector3(0.5, 0.8, 0.5);
+  const cube3 = new CollaborativeXR.StandardHologram("Cube3",
+          CollaborativeXR.StandardShape.Cube, creationOptionsCube, positionCube3,
+          rotationCube, standardColor);
+  await scene.addStandardHologram(cube3);
+
+  const positionDragSphere = new CollaborativeXR.Vector3(0, 1.5, 0.5);
+  const dragSphere = new CollaborativeXR.StandardHologram("DragSphere",
+          CollaborativeXR.StandardShape.Sphere, creationOptionsSphere, positionDragSphere,
+          rotationCube, "#ffff00");
+  await scene.addStandardHologram(dragSphere);
+
+  const dragSphereManipulatorMenuPosition = new CollaborativeXR.Vector3(0, 1.8, 0.5);
+  const dragSphereManipulatorMenu = new CollaborativeXR.ManipulatorMenu(dragSphereManipulatorMenuPosition,
+          "DragSphere");
+  scene.addManipulatorMenu(dragSphereManipulatorMenu);
+
+  const positionColorSphere = new CollaborativeXR.Vector3(0.5, 1.5, 0.5);
+  const colorSphere = new CollaborativeXR.StandardHologram("ColorSphere",
+          CollaborativeXR.StandardShape.Sphere, creationOptionsSphere, positionColorSphere,
+          rotationCube, standardColor);
+  await scene.addStandardHologram(colorSphere);
+
+  const colorSphereManipulatorMenuPosition = new CollaborativeXR.Vector3(0.5, 1.8, 0.5);
+  const colorSphereManipulatorMenu = new CollaborativeXR.ManipulatorMenu(colorSphereManipulatorMenuPosition,
+          "ColorSphere");
+  scene.addManipulatorMenu(colorSphereManipulatorMenu);
+
+  const animationTime1 =  1000;
+  const changeColor = new CollaborativeXR.Animation("changeColor", animationTime1);
+
+  const counter = new CollaborativeXR.StandardObject("counter", 1);
+  sessionManager.addStandardObject(counter);
+
+  changeColor.setAnimationCallback(() => {
+    counter.value = (counter.value + 1) % 5;
+    if(counter.value === 1){
+      cube3.color = standardColor;
+      cube1.color = propagateColor1;
+    }else if(counter.value === 2){
+      cube2.color = propagateColor1;
+      cube1.color = propagateColor2;
+    }else if(counter.value === 3){
+      cube3.color = propagateColor1;
+      cube2.color = propagateColor2;
+      cube1.color = propagateColor3;
+    }else if(counter.value === 4){
+      cube3.color = propagateColor2;
+      cube2.color = propagateColor3;
+      cube1.color = standardColor;
+    }else {
+      cube3.color = propagateColor3;
+      cube2.color = standardColor;
+    }
+  });
+
+  const positionAnimatedCube = new CollaborativeXR.Vector3(-0.5, 1.5, 0.5);
+  const animatedCube = new CollaborativeXR.StandardHologram("AnimatedCube",
+          CollaborativeXR.StandardShape.Cube, creationOptionsCube, positionAnimatedCube,
+          rotationCube, "#0066ff");
+  await scene.addStandardHologram(animatedCube);
+
+  const animationTime2 =  100;
+  const rotate = new CollaborativeXR.Animation("rotate", animationTime2);
+
+  rotate.setAnimationCallback(() => {
+    animatedCube.rotation = new CollaborativeXR.Quaternion(0.02, 0.02, animatedCube.rotation.z, animatedCube.rotation.w);
+  })
+
+  const nRowsMenu = 1;
+
+  const nearMenuRotationPosition = new CollaborativeXR.Vector3(-0.5, 1.8, 0.5);
+  const nearMenuRotation = new CollaborativeXR.NearMenu(nearMenuRotationPosition, nRowsMenu);
+
+  const buttonStartRotation = new CollaborativeXR.Button("buttonStartRotation", "START");
+  buttonStartRotation.setOnPointerDownCallback(() => {
+    rotate.startAnimation();
+  });
+  nearMenuRotation.addButton(buttonStartRotation);
+
+  const buttonStopRotation = new CollaborativeXR.Button("buttonStopRotation", "STOP");
+  buttonStopRotation.setOnPointerDownCallback(() => {
+    rotate.stopAnimation();
+  });
+  nearMenuRotation.addButton(buttonStopRotation);
+
+  scene.addNearMenu(nearMenuRotation);
+
+  const nearMenuColorPassPosition = new CollaborativeXR.Vector3(0, 1.2, 0.5);
+  const nearMenuColorPass = new CollaborativeXR.NearMenu(nearMenuColorPassPosition, nRowsMenu);
+  const buttonStartColorPass = new CollaborativeXR.Button("buttonStartColorPass", "START");
+  buttonStartColorPass.setOnPointerDownCallback(() => {
+    changeColor.startAnimation();
+  });
+  nearMenuColorPass.addButton(buttonStartColorPass);
+
+  const buttonStopColorPass = new CollaborativeXR.Button("buttonStopColorPass", "STOP");
+  buttonStopColorPass.setOnPointerDownCallback(() => {
+    changeColor.stopAnimation();
+  });
+  nearMenuColorPass.addButton(buttonStopColorPass);
+  scene.addNearMenu(nearMenuColorPass);
+
+  const nRowsColorSphereMenu = 3
+  const nearMenuColorPosition = new CollaborativeXR.Vector3(0.8, 1.5, 0.5);
+  const nearMenuColor = new CollaborativeXR.NearMenu(nearMenuColorPosition, nRowsColorSphereMenu);
+  const button1 = new CollaborativeXR.Button("button1", "Color 1");
+  button1.setOnPointerDownCallback(() =>{
+    colorSphere.color = "#0079FF"
+  });
+  const button2 = new CollaborativeXR.Button("button2", "Color 2");
+  button2.setOnPointerDownCallback(() =>{
+    colorSphere.color = "#00DFA2"
+  });
+  const button3 = new CollaborativeXR.Button("button3", "Color 3");
+  button3.setOnPointerDownCallback(() =>{
+    colorSphere.color = "#FF0060"
+  });
+
+  nearMenuColor.addButton(button3);
+  nearMenuColor.addButton(button2);
+  nearMenuColor.addButton(button1);
+  scene.addNearMenu(nearMenuColor);
+
+  scene.activateRenderLoop();
+</script>
+</body>
+</html>

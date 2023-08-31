@@ -10,16 +10,28 @@
   <style>
     #myProgress {
       width: 100%;
-      background-color: grey;
+      background-color: #f1f1f1;
     }
 
     #myBar {
       width: 1%;
       height: 30px;
-      background-color: #0093cb;
+      background-color: #4caf50;
       text-align: center; /* To center it horizontally (if you want) */
       line-height: 30px; /* To center it vertically */
       color: white;
+    }
+
+    #myButton {
+      background-color: #ff1a1a; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      width: 100%;
     }
   </style>
 </head>
@@ -75,7 +87,27 @@
     progressBar.innerHTML = width + "%";
     if(width === 100){
       progressBar.remove();
+      addResetButton();
     }
+  }
+
+  function addResetButton(){
+    const reset = document.createElement("button");
+    reset.setAttribute("id", "myButton");
+    reset.innerHTML = "RESET";
+
+    reset.onclick = function(){
+      robot1.position = industrialRobotPosition;
+      robot1.scaling = industrialRobotScaling;
+      robot1.rotation = new CollaborativeXR.Quaternion(0,0,0,0);
+      robot1.rotation = industrialRobotRotation;
+
+      robot2.position = robotArmPosition;
+      robot2.scaling = robotArmScaling;
+      robot2.rotation = new CollaborativeXR.Quaternion(0,0,0,0);
+      robot2.rotation = robotArmRotation;
+    }
+    document.body.appendChild(reset);
   }
 
 </script>
