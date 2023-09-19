@@ -3,7 +3,7 @@ const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const app = express();
-const port = 3000//'your port number (write it in numeric format not string)';
+const port = 80//'your port number (write it in numeric format not string)';
 const host = '192.168.1.132'//webXR works only on https connection
 
 https.createServer(
@@ -20,6 +20,7 @@ https.createServer(
         console.log('https://' + host + ':' + port + "/exampleRobot");
         console.log('https://' + host + ':' + port + "/exampleIndustrialRobot");
         console.log('https://' + host + ':' + port + "/exampleAnimal");
+        console.log('https://' + host + ':' + port + "/allInOne");
         console.log('Connect to the example via qrCode:');
         console.log('https://' + host + ':' + port + "/qrCode");
     });
@@ -44,6 +45,10 @@ app.get("/exampleIndustrialRobot", function (req, res) {
 
 app.get("/exampleAnimal", function (req, res) {
     res.sendFile(path.join(__dirname, '/src/html/example_animal.html'));
+})
+
+app.get("/allInOne", function (req, res) {
+    res.sendFile(path.join(__dirname, '/src/html/all_in_one.html'));
 })
 
 app.get("/qrCode", function (req, res) {
