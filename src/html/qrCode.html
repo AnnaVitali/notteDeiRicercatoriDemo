@@ -10,7 +10,10 @@
 <label for="text"></label><input id="text" type="text" value="your url" style="width:80%" /><br />
 <div id="qrcode"></div>
 <script type="text/javascript">
-    var qrcode = new QRCode("qrcode");
+    var qrcode = new QRCode("qrcode",  {
+        width: 500,
+        height: 500
+    });
 
     function makeCode () {
         var elText = document.getElementById("text");

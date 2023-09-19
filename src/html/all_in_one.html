@@ -26,7 +26,7 @@
   const color3 = "#0000ff"
   const standardColor = "#ffffff";
 
-  const positionSphere = new CollaborativeXR.Vector3(0, 1.5, 0.5);
+  const positionSphere = new CollaborativeXR.Vector3(0, 1.5, 1.4);
   const rotationSphere = new CollaborativeXR.Quaternion(0,0,0,0);
   const creationOptionsSphere = {diameter: 0.3}
   const sphere = new CollaborativeXR.StandardHologram("sphere",
@@ -34,7 +34,7 @@
           rotationSphere, standardColor);
   await scene.addStandardHologram(sphere);
 
-  const sphereManipulatorMenuPosition = new CollaborativeXR.Vector3(0, 1.8, 0.5);
+  const sphereManipulatorMenuPosition = new CollaborativeXR.Vector3(0, 1.8, 1.4);
   const sphereManipulatorMenu = new CollaborativeXR.ManipulatorMenu(sphereManipulatorMenuPosition,
           "sphere");
   scene.addManipulatorMenu(sphereManipulatorMenu);
@@ -57,7 +57,7 @@
   })
 
   const nRowsMenu = 1;
-  const nearMenuColorPassPosition = new CollaborativeXR.Vector3(0, 1.2, 0.5);
+  const nearMenuColorPassPosition = new CollaborativeXR.Vector3(0, 1.2, 1.4);
   const nearMenuColorPass = new CollaborativeXR.NearMenu(nearMenuColorPassPosition, nRowsMenu);
   const buttonStartColorPass = new CollaborativeXR.Button("buttonStartColorPass", "START");
   buttonStartColorPass.setOnPointerDownCallback(() => {
